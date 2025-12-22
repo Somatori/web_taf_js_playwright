@@ -1,5 +1,7 @@
+// import assert from 'assert';
 import { test } from '@playwright/test';
 import { LoginPage } from '../../pages/web/login.page';
+import { InventoryPage } from '../../pages/web/inventory.page';
 
 test.describe('SauceDemo — Login', () => {
   test('standard user can login (happy path)', async ({ page }) => {
@@ -13,9 +15,10 @@ test.describe('SauceDemo — Login', () => {
     }
 
     const login = new LoginPage(page);
-
     await login.goto();
     await login.login(username, password);
-    await login.expectLoggedIn();
+
+    const inventory = new InventoryPage(page);
+    await inventory.assertInventoryPageAppears();
   });
 });

@@ -1,51 +1,37 @@
-import { Page, expect } from '@playwright/test';
+// import { Page, expect } from '@playwright/test';
+import { Page } from '@playwright/test';
 
-/**
- * LoginPage — Page Object for https://www.saucedemo.com
- */
 export class LoginPage {
+  static readonly PATH = '/';
+
   constructor(private readonly page: Page) {}
 
-  // Static locators (getters)
-  private get username() {
-    return this.page.locator('#user-name');
+  // ========== LOCATORS ==========
+  private get usernameInput() {
+    return this.page.locator('input#user-name');
   }
-  private get password() {
-    return this.page.locator('#password');
+  private get passwordInput() {
+    return this.page.locator('input#password');
   }
-  private get submitButton() {
-    return this.page.locator('#login-button');
-  }
-  private get loginForm() {
-    return this.page.locator('form');
-  }
-  private inventoryContainer() {
-    return this.page.locator('[data-test="inventory-container"]');
+  private get loginButton() {
+    return this.page.locator('input#login-button');
   }
 
-  // // Dynamic locator factory example
+  // ========== DYNAMIC LOCATORS ==========
   // getInventoryItemByName(name: string) {
   //   return this.page.locator(`.inventory_item:has-text("${name}")`);
   // }
 
-  // Actions
+  // ========== ACTIONS ==========
   async goto(): Promise<void> {
-    await this.page.goto('/');
-    await expect(this.loginForm).toBeVisible();
+    await this.page.goto(LoginPage.PATH);
   }
 
   async login(username: string, password: string): Promise<void> {
-    await this.username.fill(username);
-    await this.password.fill(password);
-    await this.submitButton.click();
+    await this.usernameInput.fill(username);
+    await this.passwordInput.fill(password);
+    await this.loginButton.click();
   }
 
-  // Assertions
-  async expectLoggedIn(): Promise<void> {
-    // Wait for the inventory URL first
-    await this.page.waitForURL(/.*inventory\.html/, { timeout: 10_000 });
-
-    // Assert a single, well-scoped element is visible.
-    await expect(this.inventoryContainer()).toBeVisible();
-  }
+  // ========== ASSERTIONS ==========
 }
