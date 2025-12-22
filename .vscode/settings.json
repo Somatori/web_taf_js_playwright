@@ -1,0 +1,14 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "eslint.validate": ["typescript", "typescriptreact"],
+  "todohighlight.isEnable": true,
+  "todohighlight.isCaseSensitive": false,
+  "todohighlight.include": ["**/*.spec.ts"],
+  "todohighlight.keywordsPattern": "\\bassert(?=\\.|\\s*\\(|[A-Z])",
+  "todohighlight.defaultStyle": {
+    "color": "#8A2BE2",
+    "backgroundColor": "transparent",
+    "fontWeight": "600"
+  }
+}
