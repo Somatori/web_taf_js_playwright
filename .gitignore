@@ -13,5 +13,6 @@ screenshots/
 
 # OS / editor
 .DS_Store
+.vscode/
 .idea/
 *.log

@@ -1,5 +1,5 @@
-// import { Page, expect } from '@playwright/test';
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
+// import { Page } from '@playwright/test';
 
 export class LoginPage {
   static readonly PATH = '/';
@@ -16,10 +16,11 @@ export class LoginPage {
   private get loginButton() {
     return this.page.locator('input#login-button');
   }
-
-  // ========== DYNAMIC LOCATORS ==========
-  // getInventoryItemByName(name: string) {
-  //   return this.page.locator(`.inventory_item:has-text("${name}")`);
+  private get errorMessageArea() {
+    return this.page.locator('div#login_button_container div.error-message-container.error');
+  }
+  // private get errorMessageCaption() {
+  //   return this.errorMessageContainer.locator('h3');
   // }
 
   // ========== ACTIONS ==========
@@ -27,11 +28,22 @@ export class LoginPage {
     await this.page.goto(LoginPage.PATH);
   }
 
-  async login(username: string, password: string): Promise<void> {
-    await this.usernameInput.fill(username);
-    await this.passwordInput.fill(password);
+  async clickLoginButton(): Promise<void> {
     await this.loginButton.click();
   }
 
+  async login(username: string, password: string): Promise<void> {
+    await this.usernameInput.fill(username);
+    await this.passwordInput.fill(password);
+    this.clickLoginButton();
+  }
+
+  async getErrorMessageText() {
+    return this.errorMessageArea.innerText();
+  }
+
   // ========== ASSERTIONS ==========
+  async assertErrorMessageAppears(): Promise<void> {
+    await expect(this.errorMessageArea).toBeVisible();
+  }
 }
