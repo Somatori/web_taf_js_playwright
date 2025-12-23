@@ -12,7 +12,7 @@ export class _Page {
   //   return this.page.locator('input#user-name');
   // }
   // dynamic locator example
-  // getInventoryItemByName(name: string) {
+  // private getInventoryItemByName(name: string) {
   //   return this.page.locator(`.inventory_item:has-text("${name}")`);
   // }
 

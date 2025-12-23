@@ -3,14 +3,7 @@ import { test } from '@playwright/test';
 import { LoginPage } from '../../pages/web/login.page';
 import { InventoryPage } from '../../pages/web/inventory.page';
 
-// let login: LoginPage;
-
-// test.beforeEach(async ({ page }) => {
-//   login = new LoginPage(page);
-//   await login.goto();
-// });
-
-test.describe('SauceDemo — Login', () => {
+test.describe('Login', () => {
   test('successful login', async ({ page }) => {
     const username = process.env.SAUCEDEMO_USER;
     const password = process.env.SAUCEDEMO_PASSWORD;
