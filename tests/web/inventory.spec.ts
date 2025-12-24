@@ -13,7 +13,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe('Inventory', () => {
-  test('adding an item', async ({ page }) => {
+  test('adding an item', { tag: '@sanity' }, async ({ page }) => {
     const inventory = new InventoryPage(page);
     const product_id = 'sauce-labs-backpack';
     await inventory.addProductToCart(product_id);
