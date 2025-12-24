@@ -1,0 +1,81 @@
+name: CI — Playwright tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  test:
+    name: Run Playwright tests
+    runs-on: ubuntu-latest
+    env:
+      # CI control flags consumed by your playwright.config.ts
+      CI: 'true'
+      RETRIES: '1' # 1 retry in CI
+      WORKERS: '2' # limit workers to 2
+      TRACE: 'retain-on-failure' # record trace, keep on failure
+      VIDEO: 'retain-on-failure' # keep video for failed tests
+      SCREENSHOT: 'only-on-failure' # only capture screenshots on failure
+
+      # SauceDemo credentials must be added to the repository secrets (Settings → Secrets).
+      # These values will be available in the job as process.env.SAUCEDEMO_USER / SAUCEDEMO_PASSWORD
+      SAUCEDEMO_USER: ${{ secrets.SAUCEDEMO_USER }}
+      SAUCEDEMO_PASSWORD: ${{ secrets.SAUCEDEMO_PASSWORD }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          cache: 'npm'
+
+      - name: Cache npm (optional)
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-cache-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-cache-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers and deps
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests (workers=2, retries=1)
+        # Explicitly pass workers and retries to be unambiguous in CLI.
+        run: npx playwright test --workers=2 --retries=1 --reporter=list,html
+
+      - name: Upload Playwright HTML report (playwright-report)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+
+      - name: Upload raw test-results (videos, traces, screenshots)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results
+
+      - name: Publish Playwright report to GitHub Pages (gh-pages)
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./playwright-report
+          publish_branch: gh-pages
