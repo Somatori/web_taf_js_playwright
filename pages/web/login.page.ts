@@ -34,14 +34,9 @@ export class LoginPage {
     this.clickLoginButton();
   }
 
-  // async getErrorMessageText() {
-  //   return this.errorMessageArea.innerText();
-  // }
-
   // ========== ASSERTIONS ==========
   async assertErrorMessageAppears(expectedErrorMessage: string): Promise<void> {
     await expect(this.errorMessageArea).toBeVisible();
-    const actualErrorMessage = (await this.errorMessageArea.innerText()).trim();
-    expect(actualErrorMessage).toBe(expectedErrorMessage);
+    expect(this.errorMessageArea).toHaveText(expectedErrorMessage);
   }
 }
