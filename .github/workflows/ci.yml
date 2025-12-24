@@ -8,9 +8,9 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write # allows pushing commits (required to create/update gh-pages)
+  pages: write # allows configuring GitHub Pages
+  id-token: write # kept if you use OIDC (optional)
 
 jobs:
   test:
