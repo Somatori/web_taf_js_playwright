@@ -1,5 +1,4 @@
 import { Page, expect } from '@playwright/test';
-// import { Page } from '@playwright/test';
 
 export class LoginPage {
   static readonly PATH = '/';
@@ -19,9 +18,6 @@ export class LoginPage {
   private get errorMessageArea() {
     return this.page.locator('div#login_button_container div.error-message-container.error');
   }
-  // private get errorMessageCaption() {
-  //   return this.errorMessageContainer.locator('h3');
-  // }
 
   // ========== ACTIONS ==========
   async goto(): Promise<void> {
@@ -38,12 +34,14 @@ export class LoginPage {
     this.clickLoginButton();
   }
 
-  async getErrorMessageText() {
-    return this.errorMessageArea.innerText();
-  }
+  // async getErrorMessageText() {
+  //   return this.errorMessageArea.innerText();
+  // }
 
   // ========== ASSERTIONS ==========
-  async assertErrorMessageAppears(): Promise<void> {
+  async assertErrorMessageAppears(expectedErrorMessage: string): Promise<void> {
     await expect(this.errorMessageArea).toBeVisible();
+    const actualErrorMessage = (await this.errorMessageArea.innerText()).trim();
+    expect(actualErrorMessage).toBe(expectedErrorMessage);
   }
 }

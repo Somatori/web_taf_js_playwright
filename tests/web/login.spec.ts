@@ -1,4 +1,3 @@
-import assert from 'assert';
 import { test } from '@playwright/test';
 import { LoginPage } from '../../pages/web/login.page';
 import { InventoryPage } from '../../pages/web/inventory.page';
@@ -22,7 +21,6 @@ test.describe('Login', () => {
     await login.goto();
     await login.clickLoginButton();
 
-    await login.assertErrorMessageAppears();
-    assert.strictEqual(await login.getErrorMessageText(), 'Epic sadface: Username is required');
+    await login.assertErrorMessageAppears('Epic sadface: Username is required');
   });
 });
