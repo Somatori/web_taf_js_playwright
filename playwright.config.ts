@@ -16,9 +16,9 @@ const VIDEO = process.env.VIDEO ?? 'retain-on-failure';
 const SCREENSHOT = process.env.SCREENSHOT ?? 'only-on-failure';
 const WORKERS = process.env.WORKERS ? Number(process.env.WORKERS) : undefined;
 
-// Browser/video dimensions
-const BROWSER_WIDTH = process.env.BROWSER_WIDTH ? Number(process.env.BROWSER_WIDTH) : undefined;
-const BROWSER_HEIGHT = process.env.BROWSER_HEIGHT ? Number(process.env.BROWSER_HEIGHT) : undefined;
+// Browser/video dimensions (default: 1280x720)
+const BROWSER_WIDTH = process.env.BROWSER_WIDTH ? Number(process.env.BROWSER_WIDTH) : 1280;
+const BROWSER_HEIGHT = process.env.BROWSER_HEIGHT ? Number(process.env.BROWSER_HEIGHT) : 720;
 
 // CI and retries
 const isCI = (process.env.CI ?? 'false').toLowerCase() === 'true';
