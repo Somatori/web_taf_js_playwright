@@ -24,7 +24,7 @@ test.describe('Login', () => {
       await login.goto();
       await login.clickLoginButton();
 
-      await login.assertErrorMessageAppears('Epic sadface: Username is required');
+      await login.assertErrorMessageAppears('Epic sadface: Username is required1');
     }
   );
 });
