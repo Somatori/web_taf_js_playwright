@@ -37,6 +37,6 @@ export class LoginPage {
   // ========== ASSERTIONS ==========
   async assertErrorMessageAppears(expectedErrorMessage: string): Promise<void> {
     await expect(this.errorMessageArea).toBeVisible();
-    expect(this.errorMessageArea).toHaveText(expectedErrorMessage);
+    await expect(this.errorMessageArea).toHaveText(expectedErrorMessage);
   }
 }
