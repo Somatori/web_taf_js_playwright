@@ -4,10 +4,14 @@
   "description": "The initial web UI test automation framework (Node.js / Playwright)",
   "main": "index.js",
   "scripts": {
-    "test": "playwright test",
-    "test:headed": "playwright test --headed",
-    "test:chromium": "playwright test --project=chromium",
-    "report": "playwright show-report",
+    "c": "npx playwright test --project=chromium",
+    "c-h": "npx playwright test --project=chromium --headed",
+    "all": "npx playwright test",
+    "report": "npx playwright show-report",
+    "repeat-5": "npx playwright test --repeat-each=5",
+    "repeat-10": "npx playwright test --repeat-each=10",
+    "ui": "npx playwright test --ui",
+    "debug": "npx playwright test --project=chromium --debug",
     "lint": "eslint . --ext .ts --max-warnings=0",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write ."
