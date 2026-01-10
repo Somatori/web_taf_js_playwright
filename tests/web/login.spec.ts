@@ -8,10 +8,10 @@ test.describe('Login', () => {
     const password = process.env.SAUCEDEMO_PASSWORD;
     if (!username || !password) throw new Error('Missing credentials');
 
-    await pm.login().goto();
-    await pm.login().login(username, password);
+    await pm.login.goto();
+    await pm.login.login(username, password);
 
-    await pm.inventory().assertInventoryPageAppears();
+    await pm.inventory.assertInventoryPageAppears();
   });
 
   test(
@@ -19,9 +19,9 @@ test.describe('Login', () => {
     { tag: '@smoke' },
     async ({ page }) => {
       const pm = new PageManager(page);
-      await pm.login().goto();
-      await pm.login().clickLoginButton();
-      await pm.login().assertErrorMessageAppears('Epic sadface: Username is required');
+      await pm.login.goto();
+      await pm.login.clickLoginButton();
+      await pm.login.assertErrorMessageAppears('Epic sadface: Username is required');
     }
   );
 });

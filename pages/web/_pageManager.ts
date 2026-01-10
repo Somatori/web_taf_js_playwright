@@ -1,23 +1,21 @@
+// tests/helpers/pageManager.ts
 import { Page } from '@playwright/test';
 import { LoginPage } from '../../pages/web/login.page';
 import { InventoryPage } from '../../pages/web/inventory.page';
 
 export class PageManager {
-  private readonly page: Page;
-  private readonly loginPage: LoginPage;
-  private readonly inventoryPage: InventoryPage;
+  constructor(private readonly page: Page) {}
 
-  constructor(page: Page) {
-    this.page = page;
-    this.loginPage = new LoginPage(this.page);
-    this.inventoryPage = new InventoryPage(this.page);
+  // private caches
+  private _login?: LoginPage;
+  private _inventory?: InventoryPage;
+
+  // getter properties (lazy + concise)
+  get login(): LoginPage {
+    return (this._login ??= new LoginPage(this.page));
   }
 
-  login() {
-    return this.loginPage;
-  }
-
-  inventory() {
-    return this.inventoryPage;
+  get inventory(): InventoryPage {
+    return (this._inventory ??= new InventoryPage(this.page));
   }
 }
