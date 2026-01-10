@@ -1,30 +1,27 @@
 import { test } from '@playwright/test';
-import { LoginPage } from '../../pages/web/login.page';
-import { InventoryPage } from '../../pages/web/inventory.page';
+import { PageManager } from '../../pages/web/_pageManager';
 
 test.describe('Login', () => {
   test('successful login', { tag: '@smoke' }, async ({ page }) => {
+    const pm = new PageManager(page);
     const username = process.env.SAUCEDEMO_USER;
     const password = process.env.SAUCEDEMO_PASSWORD;
     if (!username || !password) throw new Error('Missing credentials');
 
-    const login = new LoginPage(page);
-    await login.goto();
-    await login.login(username, password);
+    await pm.login().goto();
+    await pm.login().login(username, password);
 
-    const inventory = new InventoryPage(page);
-    await inventory.assertInventoryPageAppears();
+    await pm.inventory().assertInventoryPageAppears();
   });
 
   test(
     'displaying an error message when logging in without credentials',
     { tag: '@smoke' },
     async ({ page }) => {
-      const login = new LoginPage(page);
-      await login.goto();
-      await login.clickLoginButton();
-
-      await login.assertErrorMessageAppears('Epic sadface: Username is required');
+      const pm = new PageManager(page);
+      await pm.login().goto();
+      await pm.login().clickLoginButton();
+      await pm.login().assertErrorMessageAppears('Epic sadface: Username is required');
     }
   );
 });
