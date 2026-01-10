@@ -1,4 +1,3 @@
-// tests/helpers/pageManager.ts
 import { Page } from '@playwright/test';
 import { LoginPage } from '../../pages/web/login.page';
 import { InventoryPage } from '../../pages/web/inventory.page';
