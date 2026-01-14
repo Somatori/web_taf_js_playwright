@@ -1,13 +1,12 @@
 import { test } from '../../fixtures/pageManagerFixture';
+import { User } from '../../model/user';
 
 test.describe('Login', () => {
   test('successful login', { tag: '@smoke' }, async ({ pm }) => {
-    const username = process.env.SAUCEDEMO_USER;
-    const password = process.env.SAUCEDEMO_PASSWORD;
-    if (!username || !password) throw new Error('Missing credentials');
+    const user = User.standardUser();
 
     await pm.login.goto();
-    await pm.login.login(username, password);
+    await pm.login.login(user.username, user.password);
 
     await pm.inventory.assertInventoryPageAppears();
   });
