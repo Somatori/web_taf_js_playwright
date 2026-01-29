@@ -84,7 +84,7 @@ npm run all
 ### Run a single test file
 
 ```bash
-npx playwright test tests/web/login.spec.ts
+npx playwright test tests/login.spec.ts
 ```
 
 ### Run a single test by title (grep)

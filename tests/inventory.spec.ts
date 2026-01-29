@@ -1,5 +1,5 @@
-import { test } from '../../fixtures/pageManagerFixture';
-import { User } from '../../model/user';
+import { test } from '../fixtures/pageManagerFixture';
+import { User } from '../model/user';
 
 test.beforeEach(async ({ pm }) => {
   const user = User.standardUser();
